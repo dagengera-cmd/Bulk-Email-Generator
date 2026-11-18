@@ -14,128 +14,163 @@ except ImportError:
 PROFILE_DIR = Path.home() / ".outlook_email_automator"
 PROFILE_FILE = PROFILE_DIR / "profile.json"
 
-HTML_UI = base64.b64decode("""PCFET0NUWVBFIGh0bWw+
-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAg
-ICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBp
-bml0aWFsLXNjYWxlPTEuMCI+CiAgICA8dGl0bGU+T3V0bG9vayBFbWFpbCBBdXRvbWF0b3Ig
-4oCUIERlc2t0b3AgRWRpdGlvbjwvdGl0bGU+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9j
-ZG4udGFpbHdpbmRjc3MuY29tIj48L3NjcmlwdD4KICAgIDxsaW5rIGhyZWY9Imh0dHBzOi8v
-Zm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9SW50ZXI6d2dodEA0MDA7NTAwOzYw
-MDs3MDAmZGlzcGxheT1zd2FwIiByZWw9InN0eWxlc2hlZXQiPgogICAgPCEtLSB4bHN4LWpz
-LXN0eWxlIHByZXNlcnZlcyBmdWxsIEV4Y2VsIGNlbGwgZmlsbCBjb2xvcnMsIGZvbnQgY29s
-b3JzICYgYm9sZCBzdHlsZXMgLS0+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNk
-ZWxpdnIubmV0L25wbS94bHN4LWpzLXN0eWxlQDEuMi4wL2Rpc3QveGxzeC5idW5kbGUuanMi
-IGNyb3NvcmlnaW49ImFub255bW91cyI+PC9zY3JpcHQ+CiAgICA8IS0tIEpTWmlwIGZvciBi
-YXRjaCB6aXAgZXhwb3J0IC0tPgogICAgPHNjcmlwdCBzcmM9Imh0dHBzOi8vY2RuanMuY2xv
-dWRmbGFyZS5jb20vYWpheC9saWJzL2pzemlwLzMuMTAuMS9qc3ppcC5taW4uanMiIGNyb3Nz
-b3JpZ2luPSJhbm9ueW1vdXMiPjwvc2NyaXB0PgogICAgPHN0eWxlPgogICAgICAgIGJvZHkg
-eyBmb250LWZhbWlseTogJ0ludGVyJywgc2Fucy1zZXJpZjsgfQogICAgICAgIC5lbWFpbC1i
-b2R5IHsKICAgICAgICAgICAgZm9udC1mYW1pbHk6IENhbGlicmksIEFyaWFsLCBzYW5zLXNl
-cmlmOwogICAgICAgICAgICBmb250LXNpemU6IDEwcHQ7CiAgICAgICAgICAgIGNvbG9yOiAj
-MDAwMDAwOwogICAgICAgIH0KICAgICAgICAuZW1haWwtdGFibGUgewogICAgICAgICAgICBib3Jk
-ZXItY29sbGFwc2U6IGNvbGxhcHNlOwogICAgICAgICAgICB3aWR0aDogYXV0bzsKICAgICAg
-ICAgICAgYm9yZGVyOiAxcHggc29saWQgYmxhY2s7CiAgICAgICAgICAgIGZvbnQtc2l6ZTog
-OS41cHQ7CiAgICAgICAgfQogICAgICAgIC5lbWFpbC10YWJsZSB0aCB7CiAgICAgICAgICAg
-IGJhY2tncm91bmQtY29sb3I6ICNlNjAwNWM7CiAgICAgICAgICAgIGNvbG9yOiB3aGl0ZTsK
-ICAgICAgICAgICAgYm9yZGVyOiAxcHggc29saWQgYmxhY2s7CiAgICAgICAgICAgIHBhZGRp
-bmc6IDNweCA4cHg7CiAgICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjsKICAgICAgICAg
-ICAgZm9udC13ZWlnaHQ6IGJvbGQ7CiAgICAgICAgfQogICAgICAgIC5lbWFpbC10YWJsZSB0
-ZCB7CiAgICAgICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIGJsYWNrOwogICAgICAgICAgICBw
-YWRkaW5nOiAzcHggOHB4OwogICAgICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICAg
-ICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZGY2ZTM7CiAgICAgICAgICAgIHZlcnRpY2Fs
-LWFsaWduOiBtaWRkbGU7CiAgICAgICAgfQogICAgICAgIC5lbWFpbC10YWJsZSAudG90YWxz
-LXJvdyB0ZCB7CiAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmZmMDA7CiAgICAg
-ICAgICAgIGZvbnQtd2VpZ2h0OiBib2xkOwogICAgICAgIH0KICAgICAgICAuZW1haWwtdGFi
-bGUgLm5vdGUtcm93IHRkIHsKICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZmYw
-MDsKICAgICAgICAgICAgZm9udC13ZWlnaHQ6IGJvbGQ7CiAgICAgICAgfQogICAgICAgIC5l
-bWFpbC10YWJsZSAubm90ZS1yb3cgdGQubm90ZS12YWx1ZSB7CiAgICAgICAgICAgIGJhY2tn
-cm91bmQtY29sb3I6ICNmZmZmZmY7CiAgICAgICAgICAgIGNvbG9yOiAjMWY0ZTc5OwogICAg
-ICAgICAgICBmb250LXdlaWdodDogbm9ybWFsOwogICAgICAgICAgICB0ZXh0LWFsaWduOiBs
-ZWZ0OwogICAgICAgICAgICBwYWRkaW5nLWxlZnQ6IDEwcHg7CiAgICAgICAgfQogICAgICAg
-IC50ZXh0LWdyZWVuIHsgY29sb3I6ICMwMGIwNTAgIWltcG9ydGFudDsgZm9udC13ZWlnaHQ6
-IGJvbGQ7IH0KICAgICAgICAudGV4dC1yZWQgeyBjb2xvcjogI2ZmMDAwMCAhaW1wb3J0YW50
-OyBmb250LXdlaWdodDogYm9sZDsgfQogICAgICAgIC5iZy1yZWQtcm93IHRkIHsgYmFja2dy
-b3VuZC1jb2xvcjogI2ZmMDAwMCAhaW1wb3J0YW50OyBjb2xvcjogd2hpdGUgIWltcG9ydGFu
-dDsgZm9udC13ZWlnaHQ6IGJvbGQ7IH0KICAgICAgICAuYmctcmVkLXJvdyB0ZC50ZXh0LWdy
-ZWVuLCAuYmctcmVkLXJvdyB0ZC50ZXh0LXJlZCB7IGNvbG9yOiB3aGl0ZSAhaW1wb3J0YW50
-OyB9CiAgICAgICAgLnJpY2gtZWRpdG9yOmVwdHk6YmVmb3JlIHsKICAgICAgICAgICAgY29u
-dGVudDogYXR0cihkYXRhLXBsYWNlaG9sZGVyKTsKICAgICAgICAgICAgY29sb3I6ICM5NGEz
-Yjg7CiAgICAgICAgfQogICAgPC9zdHlsZT4KPC9oZWFkPgo8Ym9keSBjbGFzcz0iYmgtc2xh
-dGUtNTAgbWluLWgtc2NyZWVuIHRleHQtc2xhdGUtODAwIGFudGlhbGlhc2Vk pbC0xMiI+
-CiAgICA8aGVhZGVyIGNsYXNzPSJiZy13aGl0ZSBib3JkZXItYiBib3JkZXItc2xhdGUtMjAw
-IHN0aWNreSB0b3AtMCB6LTEwIHNoYWRvdy1zbSI+CiAgICAgICAgPGRpdiBjbGFzcz0ibWF4
-LXctN3hsIG14LWF1dG8gcHgtNCBzbTpweC02 lgjp4LTggcHktMy41IGZsZXggZmxleC13
-cmFwIGp1c3RpZnktYmV0d2VlbiBpdGVtcy1jZW50ZXIgZ2FwLTQiPgogICAgICAgICAgICA8
-ZGl2IGNsYXNzPSJmbGV4IGl0ZW1zLWNlbnRlciBzcGFjZS14LTMiPgogICAgICAgICAgICAg
-ICAgPGRpdiBjbGFzcz0iYmctaW5kaWdvLTYwMCB0ZXh0LXdoaXRl pC0yIHJvdW5kZWQt
-bGcgc2hhZG93LXNtIj4KICAgICAgICAgICAgICAgICAgICA8c3ZnIGNsYXNzPSJ3LTYgaC02
-IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgZmlld0JveD0iMCAwIDI0IDI0
-Ij4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggc3Rva2UtbGluZWNhcD0icm91bmQi
-IHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTMgOGw3Ljg5
-IDUuMjZhMiAyIDAgMDAyLjIyIDBMMjEgOE01IDE5aDE0YTIgMiAwIDAwMi0yVjdhMiAyIDAg
-MDAtMi0ySDVhMiAyIDAgMDAtMiAydjEwYTIgMiAwIDAwMiAyeiI+PC9wYXRoPgogICAgICAg
-ICAgICAgICAgICAgIDwvc3ZnPgogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAg
-ICAgICA8ZGl2PgogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9ImZsZXggaXRlbXMt
-Y2VudGVyIGdhcC0yIj4KICAgICAgICAgICAgICAgICAgICAgICAgPGgxIGNsYXNzPSJ0ZXh0
-LWxnIGZvbnQtYm9sZCB0ZXh0LXNsYXRlLTkwMCB0cmFja2luZy10aWdodCI+T3V0bG9vayBF
-bWFpbCBBdXRvbWF0b3I8L2gxPgogICAgICAgICAgICAgICAgICAgICAgICA8c3BhbiBpZD0i
-bWVtb3J5QmFkZ2UiIGNsYXNzPSJ0ZXh0LVsxMHB4XSBmb250LXNlbWlib2xkIHB4LTIgcHkt
-MC41IHJvdW5kZWQtZnVsbCBiZy1lbWVyYWxkLTUwIHRleHQtZW1lcmFsZC03MDAgYm9yZGVy
-IGJvcmRlci1lbWVyYWxkLTIwMCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICDil48g
-V2luZG93cyBNZW1vcnkgQWN0aXZlCiAgICAgICAgICAgICAgICAgICAgICAgIDwvc3Bhbj4K
-ICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgICA8cCBjbGFz
-cz0idGV4dC14cyB0ZXh0LXNsYXRlLTUwMCI+QXV0by1zYXZpbmcgcm91dGluZywgdGVtcGxh
-dGVzLCBmb250cywgc2lnbmF0dXJlICZhbXA7IG1lcmdlZCB0YWJsZXM8L3A+CiAgICAgICAg
-ICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxkaXYgY2xh
-c3M9ImZsZXggZmxleC13cmFwIGl0ZW1zLWNlbnRlciBnYXAtMiI+CiAgICAgICAgICAgICAg
-IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-xs font-medium opacity-0 transition-opacity duration-200">
-                    ✓ Saved / Copied
+HTML_UI = r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outlook Email Automator — Desktop Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- xlsx-js-style preserves full Excel cell fill colors, font colors & bold styles -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js" crossorigin="anonymous"></script>
+    <!-- JSZip for batch zip export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .email-body {
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 11pt;
+            color: #000000;
+        }
+        .email-table {
+            border-collapse: collapse;
+            width: auto;
+            border: 1px solid black;
+            font-size: 10.5pt;
+        }
+        .email-table th {
+            background-color: #e6005c;
+            color: white;
+            border: 1px solid black;
+            padding: 4px 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .email-table td {
+            border: 1px solid black;
+            padding: 4px 10px;
+            text-align: center;
+            background-color: #fdf6e3;
+            vertical-align: middle;
+        }
+        .email-table .totals-row td {
+            background-color: #ffff00;
+            font-weight: bold;
+        }
+        .email-table .note-row td {
+            background-color: #ffff00;
+            font-weight: bold;
+        }
+        .email-table .note-row td.note-value {
+            background-color: #ffffff;
+            color: #1f4e79;
+            font-weight: normal;
+            text-align: left;
+            padding-left: 10px;
+        }
+        .text-green { color: #00b050 !important; font-weight: bold; }
+        .text-red { color: #ff0000 !important; font-weight: bold; }
+        .bg-red-row td { background-color: #ff0000 !important; color: white !important; font-weight: bold; }
+        .bg-red-row td.text-green, .bg-red-row td.text-red { color: white !important; }
+        .rich-editor:empty:before {
+            content: attr(data-placeholder);
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 antialiased pb-12">
+
+    <!-- Top Header / Action Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-sm">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-lg font-bold text-slate-900 tracking-tight">Outlook Email Automator</h1>
+                        <span id="memoryBadge" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            ● Windows Memory Active
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500">Auto-saving routing, templates, fonts, signature &amp; merged tables</p>
+                </div>
+            </div>
+
+            <!-- Export & Outlook Actions -->
+            <div class="flex flex-wrap items-center gap-2">
+                <span id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-xs font-medium opacity-0 transition-opacity duration-200">
+                    Saved / Copied
                 </span>
+                
                 <button onclick="copyText('emailSubject')" class="inline-flex items-center gap-1.5 bg-white border border-slate-300 text-slate-700 px-3 py-2 rounded-lg hover:bg-slate-50 transition text-xs font-semibold shadow-sm">
                     Copy Subject
                 </button>
+                
                 <button onclick="copyRichText('emailBodyContent')" class="inline-flex items-center gap-1.5 bg-white border border-slate-300 text-slate-700 px-3 py-2 rounded-lg hover:bg-slate-50 transition text-xs font-semibold shadow-sm">
                     Copy Body
                 </button>
+
                 <button onclick="openOutlookDraft()" class="inline-flex items-center gap-1.5 bg-indigo-600 text-white px-3.5 py-2 rounded-lg hover:bg-indigo-700 transition text-xs font-semibold shadow-sm">
                     Open in Outlook
                 </button>
+
                 <button onclick="batchOutlookDrafts()" class="inline-flex items-center gap-1.5 bg-emerald-600 text-white px-3.5 py-2 rounded-lg hover:bg-emerald-700 transition text-xs font-semibold shadow-sm">
                     Batch Outlook Drafts
                 </button>
+
                 <button onclick="exportEML()" class="inline-flex items-center gap-1.5 bg-slate-800 text-white px-3 py-2 rounded-lg hover:bg-slate-900 transition text-xs font-semibold shadow-sm">
                     .EML
                 </button>
+
                 <button onclick="batchExportZip()" class="inline-flex items-center gap-1.5 bg-slate-700 text-white px-3 py-2 rounded-lg hover:bg-slate-800 transition text-xs font-semibold shadow-sm">
                     .ZIP
                 </button>
             </div>
         </div>
     </header>
+
+    <!-- Main Content Grid -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- Left Column: Controls & Configuration -->
             <div class="lg:col-span-5 space-y-4">
+                
+                <!-- Status Notification Banner -->
                 <div id="statusToast" class="hidden rounded-lg p-3 text-xs font-medium border flex items-center justify-between transition-all">
                     <span id="statusToastMsg"></span>
                     <button onclick="document.getElementById('statusToast').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 font-bold ml-2">×</button>
                 </div>
+
+                <!-- Card 1 & 2: Data Sources + Parameters & Layout -->
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-3.5">
+                    
+                    <!-- Data Sources -->
                     <div class="flex flex-wrap items-center justify-between gap-2">
                         <span class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
                             1. Data Sources
                         </span>
+                        
                         <div class="flex items-center gap-1.5">
                             <button onclick="toggleBubble('tableUploadBubble')" id="btnTableBubble" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 transition cursor-pointer">
                                 <span id="tableBubbleText">Table (.xlsx)</span>
                                 <span class="text-[10px] opacity-60">▼</span>
                             </button>
+
                             <button onclick="toggleBubble('routingUploadBubble')" id="btnRoutingBubble" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 transition cursor-pointer">
                                 <span id="routingBubbleText">Routing (To/CC)</span>
                                 <span class="text-[10px] opacity-60">▼</span>
                             </button>
                         </div>
                     </div>
+
+                    <!-- Table Upload Drawer -->
                     <div id="tableUploadBubble" class="p-3 bg-indigo-50/60 border border-indigo-100 rounded-lg space-y-2">
                         <div class="flex justify-between items-center">
                             <label for="excelUpload" class="text-[11px] font-bold text-indigo-950">Upload Table Excel (.xlsx)</label>
@@ -147,6 +182,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                             <select id="sheetSelect" onchange="handleSheetChange()" class="border border-indigo-200 rounded px-2 py-0.5 text-xs bg-white font-semibold text-slate-800"></select>
                         </div>
                     </div>
+
+                    <!-- Routing Upload Drawer -->
                     <div id="routingUploadBubble" class="p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-2 hidden">
                         <div class="flex justify-between items-center">
                             <label for="routingUpload" class="text-[11px] font-bold text-slate-700">Upload Routing (.xlsx) — Auto-Remembered</label>
@@ -157,7 +194,10 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         <input type="file" id="routingUpload" accept=".xlsx, .xls" class="block w-full text-[11px] text-slate-600 file:mr-2 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-[11px] file:font-semibold file:bg-slate-700 file:text-white hover:file:bg-slate-800 cursor-pointer" onchange="handleRoutingUpload(event)">
                         <p class="text-[10px] text-slate-500">Saved permanently on Windows once uploaded. Columns: <code class="text-slate-700">RSE, To, CC: ZSI, Fixed CC</code></p>
                     </div>
+
                     <hr class="border-slate-100">
+
+                    <!-- Parameters & Layout -->
                     <div class="space-y-2.5">
                         <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
@@ -181,6 +221,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                                 <input type="text" id="longDate" class="w-full border border-slate-300 rounded-md px-2 py-1.5 text-xs text-slate-800 focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="renderEmail()">
                             </div>
                         </div>
+
+                        <!-- Table Merge, Total Row, Note Row & Excel Design Options -->
                         <div class="grid grid-cols-2 gap-x-3 gap-y-1.5 pt-1 text-[11px] text-slate-700">
                             <label class="inline-flex items-center gap-1.5 cursor-pointer">
                                 <input type="checkbox" id="mergeGroupCells" checked onchange="onSettingChange()" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-3.5 h-3.5">
@@ -199,6 +241,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                                 <span>Retain Excel table design</span>
                             </label>
                         </div>
+
+                        <!-- Global Typography Controls -->
                         <div class="grid grid-cols-3 gap-2 pt-1.5 border-t border-slate-100">
                             <div>
                                 <label for="globalFontFamily" class="block text-[10px] font-semibold text-slate-500 uppercase mb-0.5">Email Font</label>
@@ -239,6 +283,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         </div>
                     </div>
                 </div>
+
+                <!-- Card 3: Customize Template -->
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-2.5">
                     <div class="flex justify-between items-center">
                         <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
@@ -247,18 +293,23 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         </h2>
                         <span class="text-[10px] text-slate-400">Auto-saved to disk</span>
                     </div>
+                    
+                    <!-- Variable Pills -->
                     <div class="flex flex-wrap gap-1.5 items-center bg-slate-50 p-1.5 rounded-lg border border-slate-200/80">
                         <span class="text-[10px] text-slate-500 font-semibold uppercase px-1">Variables:</span>
                         <span draggable="true" ondragstart="handleDragStart(event, '{region}')" onclick="insertVariable('{region}')" class="cursor-pointer select-none text-[11px] font-mono bg-white hover:bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-200 transition">{region}</span>
                         <span draggable="true" ondragstart="handleDragStart(event, '{shortDate}')" onclick="insertVariable('{shortDate}')" class="cursor-pointer select-none text-[11px] font-mono bg-white hover:bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-200 transition">{shortDate}</span>
                         <span draggable="true" ondragstart="handleDragStart(event, '{longDate}')" onclick="insertVariable('{longDate}')" class="cursor-pointer select-none text-[11px] font-mono bg-white hover:bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-200 transition">{longDate}</span>
                     </div>
+
                     <div>
                         <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-0.5">Subject Line</label>
                         <input type="text" id="subjectTemplate" onfocus="lastFocusedTarget = this" ondragover="allowDrop(event)" ondrop="handleDrop(event)" class="w-full border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:ring-2 focus:ring-indigo-500 focus:outline-none" value="RE: Shelving Status of Ventrax HFA Inhaler {shortDate} of {region}" oninput="onSettingChange()">
                     </div>
+
                     <div>
                         <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-0.5">Opening Body Text</label>
+                        <!-- Rich Text Toolbar -->
                         <div class="flex flex-wrap items-center gap-1 bg-slate-100 border border-b-0 border-slate-300 rounded-t-lg px-2 py-1">
                             <button type="button" onmousedown="event.preventDefault(); execBodyCmd('bold')" class="px-2 py-0.5 rounded hover:bg-white text-xs font-bold text-slate-800" title="Bold">B</button>
                             <button type="button" onmousedown="event.preventDefault(); execBodyCmd('italic')" class="px-2 py-0.5 rounded hover:bg-white text-xs italic font-serif text-slate-800" title="Italic">I</button>
@@ -290,6 +341,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         <div id="bodyEditor" contenteditable="true" onfocus="lastFocusedTarget = this" ondragover="allowDrop(event)" ondrop="handleDrop(event)" oninput="onSettingChange()" class="rich-editor w-full min-h-[85px] border border-slate-300 rounded-b-lg px-2.5 py-2 text-xs text-slate-800 bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none leading-relaxed">Dear Vai,<br><br>Please find below the MPE-wise shelving status of Ventrax® HFA Inhaler (VHI) as of {longDate}</div>
                     </div>
                 </div>
+
+                <!-- Card 4: Append Signature -->
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
                     <div class="flex items-center justify-between">
                         <label class="inline-flex items-center gap-2 cursor-pointer">
@@ -300,6 +353,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                             Edit Details
                         </button>
                     </div>
+
                     <div id="signatureEditorDrawer" class="mt-3 pt-2.5 border-t border-slate-100 space-y-2 text-xs">
                         <div class="flex items-center justify-between">
                             <span class="text-[10px] font-semibold text-slate-500 uppercase">Signature Editor (Auto-Saved)</span>
@@ -311,6 +365,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                                 <button onclick="resetDefaultSignature()" class="text-[10px] text-slate-400 hover:text-slate-600">Reset</button>
                             </div>
                         </div>
+
+                        <!-- Signature Formatting Toolbar -->
                         <div class="flex flex-wrap items-center gap-1 bg-slate-100 border border-b-0 border-slate-300 rounded-t-lg px-2 py-1">
                             <button type="button" onmousedown="event.preventDefault(); execSigCmd('bold')" class="px-1.5 py-0.5 rounded hover:bg-white text-[11px] font-bold text-slate-800">B</button>
                             <button type="button" onmousedown="event.preventDefault(); execSigCmd('italic')" class="px-1.5 py-0.5 rounded hover:bg-white text-[11px] italic font-serif text-slate-800">I</button>
@@ -331,6 +387,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                             <input type="color" value="#1f4e79" onchange="applySigColor(this.value)" class="w-3.5 h-3.5 p-0 border-0 bg-transparent cursor-pointer">
                             <button type="button" onmousedown="event.preventDefault(); execSigCmd('removeFormat'); onSettingChange();" class="ml-auto px-1.5 py-0.5 rounded hover:bg-white text-[10px] text-slate-500">Clear</button>
                         </div>
+
                         <div id="sigPasteBox" contenteditable="true" oninput="onSettingChange()" class="w-full min-h-[90px] max-h-48 overflow-y-auto border border-slate-300 rounded-b-lg p-2.5 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none text-[11px] leading-relaxed">
                             <p style="margin: 0 0 8px 0; color: #1f4e79; font-weight: bold;">Thanks and regards,</p>
                             <p style="margin: 0; color: #595959;">
@@ -340,6 +397,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                                 | <strong>Cell</strong> +88 <a href="tel:+8801760021915" style="color: #954f72; text-decoration: underline;">01760021915</a> | <strong>Fax</strong> <a href="tel:+880258613888" style="color: #954f72; text-decoration: underline;">+880 2 58613888</a> | <a href="mailto:mke@bpl.net" style="color: #0563c1; text-decoration: underline;">mke@bpl.net</a> | <a href="http://www.beximcopharma.com" style="color: #0563c1; text-decoration: underline;">www.beximcopharma.com</a>
                             </p>
                         </div>
+
                         <div class="flex items-center justify-between text-[10px] text-slate-500 bg-slate-50 px-2.5 py-1.5 rounded-md border border-slate-200/70">
                             <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-slate-600">
                                 <input type="checkbox" id="autoDetectLogo" checked onchange="onSettingChange()" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-3 h-3">
@@ -349,7 +407,10 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         </div>
                     </div>
                 </div>
+
             </div>
+
+            <!-- Right Column: Live Email Preview -->
             <div class="lg:col-span-7">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="bg-slate-800 text-slate-200 px-4 py-2.5 text-xs font-medium flex items-center justify-between">
@@ -361,6 +422,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         </div>
                         <span class="text-[11px] text-slate-400">Edits to To/Cc are remembered per region</span>
                     </div>
+
                     <div class="bg-slate-50/70 border-b border-slate-200 p-4 text-xs space-y-2">
                         <div class="grid grid-cols-[55px_1fr] items-center">
                             <span class="text-slate-400 font-medium">From</span>
@@ -379,6 +441,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                             <div class="text-slate-900 font-bold text-sm px-2 py-0.5" id="emailSubject"></div>
                         </div>
                     </div>
+
                     <div class="p-6 md:p-8 bg-white overflow-x-auto">
                         <div class="email-body" id="emailBodyContent">
                             <div id="dynamicBodyText" class="text-gray-900"></div>
@@ -388,8 +451,10 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                     </div>
                 </div>
             </div>
+
         </div>
     </main>
+
     <script>
         let lastFocusedTarget = null;
         let customSigLogoData = null;
@@ -399,12 +464,15 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
         let regionHeaderStyles = {};
         let regionExplicitMerges = {};
         let saveTimer = null;
+
         const DEFAULT_LOGO_B64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAAyCAYAAAC0Z5aCAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAH1SURBVGhD7djbbsIwEAXQvjfpv//puzgldk2J7e7a8gVzTCCK1x7aFv8mXGZmZiY9k05E7X/v/z9cE0wKk70qjQWwZ2YvG1PZqj5r/T53m0r/jJtL7Lq9s6lX0zZtvP1W+1c3/GjX1cZ36Z6c3H3fHq3P+/4rNq2T3m9u78+J11bT80Jq207f2+zU/tA2vN4n3eZ/y0qVwG95O/b2m1695f3/v7uL2eF1+5/hV0451Xo/rZ83t/zL4u3P92f1F8F8M/N3p8r/0M1u34eX/3/Gf1Vj9+P19vN6tq6n7X/1u/v1vP/+T6Hn5t7+Xv72Lq3H2d+bTj8/7l0L/a9t/c+f31P6X//dvdv3f8n1f2n73e/gV2xP8Gk8vj4AAAAASUVORK5CYII=";
+
         let routingData = {
             "R4": { to: "PSL-(NAL)-Md. Nur-A- Alam", cc: "SBM-(ALM)-Mahabub Alam.; PSL-(KNH)-Kazi Nurul Hoque; PSL-(MDR)-Masud Rana khan; PSL-(ANL)-Ahsanul Kabir;" },
             "A2": { to: "PSL-(MZO)-Md. Zakir Hossain", cc: "SBM-(ALM)-Mahabub Alam.; PSL-(KNH)-Kazi Nurul Hoque; PSL-(MDR)-Masud Rana khan; PSL-(ANL)-Ahsanul Kabir;" },
             "N4": { to: "PSL-(KMO)-Kazi Md. Mostafa", cc: "SBM-(RML)-Noor-Ul Azam Khan Romel; SBM-(ALM)-Mahabub Alam.; PSL-(KNH)-Kazi Nurul Hoque;" }
         };
+
         let tableData = {
             "R4": [
                 { "ASE": "R410", "T.Code": "R411", "Shelving Till 15": 1, "Shelving Till 19": 3, "Shelving Till 25": 14, "Shelving Till 28": 14, "New Shelving": 0, "Remarks": "" },
@@ -425,10 +493,13 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 { "ASE": "N420", "T.Code": "N421", "Shelving Till 15": 4, "Shelving Till 19": 10, "Shelving Till 25": 14, "Shelving Till 28": 12, "New Shelving": -2, "Remarks": "" }
             ]
         };
+
+        // --- WINDOWS DISK MEMORY BRIDGE ---
         function scheduleSaveMemory() {
             clearTimeout(saveTimer);
             saveTimer = setTimeout(saveMemoryToDisk, 400);
         }
+
         async function saveMemoryToDisk() {
             const payload = {
                 routingData,
@@ -454,6 +525,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 }
             } catch (e) { console.error("Memory save error:", e); }
         }
+
         async function loadMemoryFromDisk() {
             let raw = null;
             try {
@@ -463,6 +535,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                     raw = localStorage.getItem('outlook_automator_profile');
                 }
             } catch (e) { console.error("Memory load error:", e); }
+
             if (!raw) return;
             try {
                 const p = JSON.parse(raw);
@@ -492,10 +565,12 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 if (rCount > 0) document.getElementById('routingBubbleText').innerText = `Routing (${rCount})`;
             } catch (e) { console.error("Profile parse error:", e); }
         }
+
         function onSettingChange() {
             renderEmail();
             scheduleSaveMemory();
         }
+
         function saveCurrentRoutingEdit() {
             const region = document.getElementById('regionSelect').value;
             if (!region) return;
@@ -504,6 +579,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             routingData[region].cc = document.getElementById('emailCc').value;
             scheduleSaveMemory();
         }
+
+        // --- UI HELPERS ---
         function toggleBubble(drawerId) {
             const drawers = ['tableUploadBubble', 'routingUploadBubble', 'signatureEditorDrawer'];
             drawers.forEach(id => {
@@ -513,6 +590,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 else if (drawerId !== 'signatureEditorDrawer' && id !== 'signatureEditorDrawer') el.classList.add('hidden');
             });
         }
+
         function showStatus(msg, isError = false) {
             const toast = document.getElementById('statusToast');
             const msgEl = document.getElementById('statusToastMsg');
@@ -523,6 +601,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             toast.classList.remove('hidden');
             setTimeout(() => { toast.classList.add('hidden'); }, 4500);
         }
+
+        // --- RICH TEXT EDITING ---
         function execBodyCmd(cmd, val = null) {
             const editor = document.getElementById('bodyEditor');
             editor.focus();
@@ -540,6 +620,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             onSettingChange();
         }
         function applySigColor(hex) { execSigCmd('foreColor', hex); }
+
         function applyExactFontSize(editorId, sizeStr) {
             if (!sizeStr) return;
             const editor = document.getElementById(editorId);
@@ -557,6 +638,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             sel.addRange(newRange);
             onSettingChange();
         }
+
         function changeRichFontSize(editorId, delta) {
             const editor = document.getElementById(editorId);
             editor.focus();
@@ -571,6 +653,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             const nextPt = Math.max(8, Math.min(28, currentPt + delta));
             applyExactFontSize(editorId, `${nextPt}pt`);
         }
+
+        // --- VARIABLES ---
         function handleDragStart(e, variableText) {
             e.dataTransfer.setData('text/plain', variableText);
             e.dataTransfer.effectAllowed = 'copy';
@@ -598,6 +682,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             }
             onSettingChange();
         }
+
+        // --- SIGNATURE & LOGO ---
         function handleSigLogoUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -650,6 +736,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             if (!plainText && !box.querySelector('img')) return '';
             return `<br><br><div style="font-family: ${fontFamily}; font-size: ${fontSize}; color: #595959; line-height: 1.45;">${rawHtml}${getAutoLogoHTML(plainText)}</div>`;
         }
+
+        // --- EXCEL STYLE EXTRACTOR ---
         function excelColorToHex(colorObj) {
             if (!colorObj) return null;
             if (colorObj.rgb) {
@@ -673,6 +761,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             }
             return null;
         }
+
         function extractCellStyle(cell) {
             if (!cell || !cell.s) return null;
             const s = cell.s;
@@ -693,6 +782,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             }
             return Object.keys(styleObj).length > 0 ? styleObj : null;
         }
+
+        // --- EXCEL PARSER WITH 2D MERGED CELLS (ROWSPAN + COLSPAN) ---
         function handleExcelUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -713,11 +804,13 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             };
             reader.readAsArrayBuffer(file);
         }
+
         function handleSheetChange() {
             if (!currentWorkbook) return;
             const name = document.getElementById('sheetSelect').value;
             parseWorksheet(currentWorkbook.Sheets[name]);
         }
+
         function parseWorksheet(worksheet) {
             if (!worksheet || !worksheet['!ref']) {
                 showStatus("The selected worksheet is empty.", true);
@@ -739,6 +832,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 grid.push(rowArr);
                 styleGrid.push(sRowArr);
             }
+
             const mergeMaster = {};
             const mergeCovered = {};
             const merges = worksheet['!merges'] || [];
@@ -766,6 +860,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                     }
                 }
             });
+
             let headerRowIdx = -1;
             let headerCols = [];
             for (let r = 0; r < grid.length; r++) {
@@ -780,6 +875,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 showStatus("Could not find an 'RSE' or 'Region' header column in this sheet.", true);
                 return;
             }
+
             tableData = {};
             regionNotes = {};
             regionHeaders = {};
@@ -790,18 +886,22 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             let lastGroupVals = {};
             const groupColNames = new Set(['rse', 'region', 'ase', 'specialty', 'speciality', 'zone', 'territory']);
             const routingColNames = new Set(['to', 'cc', 'cc: zsi', 'fixed cc']);
+
             for (let r = headerRowIdx + 1; r < grid.length; r++) {
                 const row = grid[r];
                 const nonEmpty = row.filter(v => v !== "");
                 if (nonEmpty.length === 0) continue;
+
                 const isRepeatedHeader = headerCols.filter(h => row[h.idx] && row[h.idx].toLowerCase() === h.name.toLowerCase()).length >= 2;
                 if (isRepeatedHeader) {
                     headerCols = grid[r].map((v, idx) => ({ name: v, idx })).filter(h => h.name !== "");
                     lastGroupVals = {};
                     continue;
                 }
+
                 const firstTwoText = nonEmpty.slice(0, 2).join(" ").toLowerCase();
                 if (/\btotal\b/.test(firstTwoText) && !nonEmpty.some(v => /^[A-Z]\d{3}$/i.test(v))) continue;
+
                 const noteLabelIdx = row.findIndex(v => /did not select|not selected|note\s*:/i.test(v));
                 if (noteLabelIdx !== -1) {
                     const label = row[noteLabelIdx];
@@ -812,6 +912,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                     }
                     continue;
                 }
+
                 const rowObj = {};
                 const rowStyles = {};
                 const rowMergeInfo = {};
@@ -821,6 +922,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                     if (mergeMaster[`${r}:${h.idx}`]) rowMergeInfo[h.name] = mergeMaster[`${r}:${h.idx}`];
                     else if (mergeCovered[`${r}:${h.idx}`]) rowMergeInfo[h.name] = { covered: true };
                 });
+
                 const rseCol = headerCols.find(h => /^(rse|region)$/i.test(h.name));
                 let regVal = rseCol ? rowObj[rseCol.name] : "";
                 if (!regVal) {
@@ -831,11 +933,13 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                     else if (currentRegion) regVal = currentRegion;
                 }
                 if (!regVal) continue;
+
                 if (regVal !== currentRegion) {
                     currentRegion = regVal;
                     lastGroupVals = {};
                 }
                 if (rseCol) rowObj[rseCol.name] = currentRegion;
+
                 headerCols.forEach(h => {
                     const low = h.name.toLowerCase();
                     if (groupColNames.has(low)) {
@@ -843,6 +947,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         else if (lastGroupVals[low]) rowObj[h.name] = lastGroupVals[low];
                     }
                 });
+
                 regions.add(currentRegion);
                 if (!tableData[currentRegion]) {
                     tableData[currentRegion] = [];
@@ -853,6 +958,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         if (styleGrid[headerRowIdx][h.idx]) regionHeaderStyles[currentRegion][h.name] = styleGrid[headerRowIdx][h.idx];
                     });
                 }
+
                 if (rowObj['To'] || rowObj['TO']) {
                     if (!routingData[currentRegion]) routingData[currentRegion] = {};
                     routingData[currentRegion].to = rowObj['To'] || rowObj['TO'];
@@ -867,11 +973,13 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                     if (!routingData[currentRegion]) routingData[currentRegion] = {};
                     routingData[currentRegion].cc = rowObj['CC'] || rowObj['Cc'];
                 }
+
                 rowObj.isRedRow = String(rowObj['Remarks'] || '').toLowerCase().includes('0 steps') || String(rowObj['Remarks'] || '').toLowerCase().includes('immediate attention');
                 rowObj._styles = rowStyles;
                 tableData[currentRegion].push(rowObj);
                 regionExplicitMerges[currentRegion].push(rowMergeInfo);
             }
+
             const select = document.getElementById('regionSelect');
             select.innerHTML = '';
             regions.forEach(region => {
@@ -880,6 +988,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 option.text = region;
                 select.appendChild(option);
             });
+
             if (regions.size > 0) {
                 renderEmail();
                 scheduleSaveMemory();
@@ -889,6 +998,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 showStatus("No valid region rows found in this sheet.", true);
             }
         }
+
         function handleRoutingUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -921,6 +1031,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             };
             reader.readAsArrayBuffer(file);
         }
+
         async function downloadDemoRouting() {
             const ws_data = [
                 ["RSE", "To", "CC: ZSI", "Fixed CC"],
@@ -939,20 +1050,25 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 XLSX.writeFile(wb, "Demo_Routing_Template.xlsx");
             }
         }
+
+        // --- DYNAMIC TABLE GENERATOR WITH HIERARCHY VERTICAL MERGING & PER-ROW HORIZONTAL MERGING ---
         function generateTableHTML(region, fontFamily, tableFontSize) {
             const data = tableData[region];
             if (!data || data.length === 0) return "<p class='text-rose-600 italic'>No data available for this region.</p>";
+
             const excludeKeys = ['to', 'cc', 'isredrow', 'cc: zsi', 'fixed cc', '_styles'];
             const columns = regionHeaders[region] || Object.keys(data[0]).filter(key => !excludeKeys.includes(key.toLowerCase().trim()));
             const mergeEnabled = document.getElementById('mergeGroupCells')?.checked ?? true;
             const showTotalRow = document.getElementById('showTotalRow')?.checked ?? true;
             const includeNotes = document.getElementById('includeNoteRows')?.checked ?? true;
             const retainDesign = document.getElementById('retainExcelDesign')?.checked ?? false;
+
             const notes = includeNotes ? (regionNotes[region] || []) : [];
             const flaggedCodes = new Set();
             notes.forEach(n => {
                 String(n.detail || '').split(/[,;\s]+/).forEach(tok => { if (tok.trim()) flaggedCodes.add(tok.trim().toUpperCase()); });
             });
+
             let totals = {};
             let isColumnNumeric = {};
             columns.forEach(col => {
@@ -963,13 +1079,17 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 if (/code|ase|rse|mpe|territory/i.test(col)) isNum = false;
                 isColumnNumeric[col] = isNum;
             });
+
             const cellMap = Array.from({ length: data.length }, () => {
                 const obj = {};
                 columns.forEach(col => { obj[col] = { rs: 1, cs: 1 }; });
                 return obj;
             });
+
             const explicitMerges = regionExplicitMerges[region] || [];
+
             if (mergeEnabled) {
+                // 1. Apply exact 2D merges from Excel (!merges)
                 for (let r = 0; r < data.length; r++) {
                     const mRow = explicitMerges[r] || {};
                     columns.forEach(col => {
@@ -980,6 +1100,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         }
                     });
                 }
+
+                // 2. Smart horizontal merge per row for repeated status phrases (e.g. "No PB selected")
                 for (let r = 0; r < data.length; r++) {
                     let cIdx = 0;
                     while (cIdx < columns.length) {
@@ -987,6 +1109,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         if (!cellMap[r][col] || cellMap[r][col].cs > 1 || cellMap[r][col].rs > 1) { cIdx++; continue; }
                         const val = String(data[r][col] ?? '').trim();
                         if (val === '' || !isNaN(val) || /code|ase|rse|mpe|remarks/i.test(col)) { cIdx++; continue; }
+
                         let cs = 1;
                         while (cIdx + cs < columns.length) {
                             const nextCol = columns[cIdx + cs];
@@ -1002,20 +1125,23 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                         cIdx += cs;
                     }
                 }
+
+                // 3. Vertical merge strictly for hierarchy columns (RSE, ASE, Specialty)
+                const hierarchyCols = new Set(['rse', 'region', 'ase', 'specialty', 'speciality', 'zone', 'territory']);
                 columns.forEach((col, cIdx) => {
-                    if (col.toLowerCase() === 'remarks') return;
+                    if (!hierarchyCols.has(col.toLowerCase())) return;
                     let r = 0;
                     while (r < data.length) {
                         const cellInfo = cellMap[r][col];
                         if (!cellInfo || cellInfo.rs > 1) { r++; continue; }
                         const val = String(data[r][col] ?? '').trim();
-                        if (val === '' || !isNaN(val)) { r++; continue; }
-                        const curCs = cellInfo.cs;
+                        if (val === '') { r++; continue; }
+
                         const parentSig = columns.slice(0, cIdx).map(pCol => String(data[r][pCol] ?? '').trim()).join('|');
                         let span = 1;
                         while (r + span < data.length) {
                             const nextInfo = cellMap[r + span][col];
-                            if (!nextInfo || nextInfo.rs > 1 || nextInfo.cs !== curCs) break;
+                            if (!nextInfo || nextInfo.rs > 1) break;
                             const nextVal = String(data[r + span][col] ?? '').trim();
                             const nextParentSig = columns.slice(0, cIdx).map(pCol => String(data[r + span][pCol] ?? '').trim()).join('|');
                             if (nextVal === val && nextParentSig === parentSig) span++;
@@ -1031,6 +1157,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                     }
                 });
             }
+
             let html = `<table class="email-table" style="font-family: ${fontFamily}; font-size: ${tableFontSize};"><thead><tr>`;
             columns.forEach(col => {
                 let thStyle = "";
@@ -1043,18 +1170,23 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 html += `<th style="${thStyle}">${col}</th>`;
             });
             html += `</tr></thead><tbody>`;
+
             data.forEach((row, rIdx) => {
                 let rowClass = row.isRedRow ? "class='bg-red-row'" : "";
                 html += `<tr ${rowClass}>`;
                 columns.forEach(col => {
                     let val = row[col] !== undefined ? row[col] : '';
                     if (isColumnNumeric[col] && val !== '') totals[col] += parseFloat(val) || 0;
+
                     const info = cellMap[rIdx][col];
                     if (mergeEnabled && info === null) return;
+
                     const rsAttr = (mergeEnabled && info && info.rs > 1) ? ` rowspan="${info.rs}"` : '';
                     const csAttr = (mergeEnabled && info && info.cs > 1) ? ` colspan="${info.cs}"` : '';
+
                     let cellClass = "";
                     let inlineStyles = [];
+
                     if (retainDesign && row._styles && row._styles[col]) {
                         const cs = row._styles[col];
                         if (cs.bg) inlineStyles.push(`background-color: ${cs.bg}`);
@@ -1072,14 +1204,17 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                             cellClass = "text-red";
                         }
                     }
+
                     if (col.toLowerCase() === 'remarks') {
                         inlineStyles.push('text-align: left', 'padding-left: 10px');
                     }
+
                     const styleStr = inlineStyles.length > 0 ? ` style="${inlineStyles.join('; ')};"` : '';
                     html += `<td${rsAttr}${csAttr} class="${cellClass}"${styleStr}>${val}</td>`;
                 });
                 html += `</tr>`;
             });
+
             if (showTotalRow) {
                 html += `<tr class="totals-row">`;
                 columns.forEach((col, index) => {
@@ -1089,6 +1224,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 });
                 html += `</tr>`;
             }
+
             if (notes.length > 0) {
                 const labelSpan = Math.min(3, Math.max(1, Math.floor(columns.length / 2)));
                 const detailSpan = Math.max(1, columns.length - labelSpan);
@@ -1096,9 +1232,11 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                     html += `<tr class="note-row"><td colspan="${labelSpan}">${n.label}</td><td colspan="${detailSpan}" class="note-value">${n.detail}</td></tr>`;
                 });
             }
+
             html += `</tbody></table>`;
             return html;
         }
+
         function renderEmail() {
             const region = document.getElementById('regionSelect').value || "N/A";
             const dateShort = document.getElementById('shortDate').value || "";
@@ -1106,30 +1244,39 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             const fontFamily = document.getElementById('globalFontFamily')?.value || "Calibri, Arial, sans-serif";
             const bodyFontSize = document.getElementById('bodyFontSize')?.value || "11pt";
             const tableFontSize = document.getElementById('tableFontSize')?.value || "10.5pt";
+
             const subjectTemplate = document.getElementById('subjectTemplate').value || "";
             const bodyTemplateHtml = document.getElementById('bodyEditor').innerHTML || "";
+
             const finalSubject = subjectTemplate
                 .replace(/\{region\}/gi, region)
                 .replace(/\{shortDate\}/gi, dateShort)
                 .replace(/\{longDate\}/gi, dateLong);
+
             const finalBody = bodyTemplateHtml
                 .replace(/\{region\}/gi, region)
                 .replace(/\{shortDate\}/gi, dateShort)
                 .replace(/\{longDate\}/gi, dateLong);
+
             document.getElementById('emailSubject').innerText = finalSubject;
+
             const emailBodyEl = document.getElementById('emailBodyContent');
             emailBodyEl.style.fontFamily = fontFamily;
             emailBodyEl.style.fontSize = bodyFontSize;
+
             const dynamicBodyEl = document.getElementById('dynamicBodyText');
             dynamicBodyEl.style.fontFamily = fontFamily;
             dynamicBodyEl.style.fontSize = bodyFontSize;
             dynamicBodyEl.innerHTML = finalBody + '<br><br>';
+
             const routing = routingData[region] || { to: "", cc: "" };
             document.getElementById('emailTo').value = routing.to || "";
             document.getElementById('emailCc').value = routing.cc || "";
+
             document.getElementById('tableContainer').innerHTML = generateTableHTML(region, fontFamily, tableFontSize);
             document.getElementById('signatureContainer').innerHTML = generateSignatureHTML(fontFamily, bodyFontSize);
         }
+
         function buildEmailStyles(fontFamily, bodyFontSize, tableFontSize) {
             return `
                 <style>
@@ -1147,6 +1294,8 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 </style>
             `;
         }
+
+        // --- OUTLOOK DIRECT COM & EXPORT ---
         async function openOutlookDraft() {
             const to = document.getElementById('emailTo').value || '';
             const cc = document.getElementById('emailCc').value || '';
@@ -1156,6 +1305,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             const tableFontSize = document.getElementById('tableFontSize')?.value || "10.5pt";
             const bodyContent = document.getElementById('emailBodyContent').innerHTML;
             const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8">${buildEmailStyles(fontFamily, bodyFontSize, tableFontSize)}</head><body>${bodyContent}</body></html>`;
+
             if (window.pywebview && window.pywebview.api) {
                 const res = await window.pywebview.api.open_outlook_draft(to, cc, subject, fullHtml);
                 if (res === "OK") showStatus("Opened draft directly in Microsoft Outlook!");
@@ -1164,6 +1314,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 exportEML();
             }
         }
+
         async function batchOutlookDrafts() {
             if (!window.pywebview || !window.pywebview.api) {
                 batchExportZip();
@@ -1179,6 +1330,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             const bodyFontSize = document.getElementById('bodyFontSize')?.value || "11pt";
             const tableFontSize = document.getElementById('tableFontSize')?.value || "10.5pt";
             const styles = buildEmailStyles(fontFamily, bodyFontSize, tableFontSize);
+
             const drafts = [];
             for (const region of regions) {
                 if (!tableData[region] || tableData[region].length === 0) continue;
@@ -1194,6 +1346,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             if (res.startsWith("OK:")) showStatus(res.slice(3));
             else showStatus(res, true);
         }
+
         function showFeedback() {
             const feedback = document.getElementById('copyFeedback');
             feedback.style.opacity = '1';
@@ -1220,6 +1373,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             sel.removeAllRanges();
             showFeedback();
         }
+
         async function exportEML() {
             const to = document.getElementById('emailTo').value || '';
             const cc = document.getElementById('emailCc').value || '';
@@ -1231,6 +1385,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8">${buildEmailStyles(fontFamily, bodyFontSize, tableFontSize)}</head><body>${bodyContent}</body></html>`;
             const emlContent = [`To: ${to}`, `Cc: ${cc}`, `Subject: ${subject}`, `X-Unsent: 1`, `Content-Type: text/html; charset="utf-8"`, ``, fullHtml].join('\r\n');
             const filename = `${subject.replace(/[^a-z0-9]/gi, '_').substring(0, 150)}.eml`;
+
             if (window.pywebview && window.pywebview.api) {
                 const res = await window.pywebview.api.save_text_file(filename, emlContent);
                 if (res) showStatus("Saved .EML file!");
@@ -1243,6 +1398,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 URL.revokeObjectURL(url);
             }
         }
+
         async function batchExportZip() {
             if (Object.keys(tableData).length === 0) { showStatus("No data available to export.", true); return; }
             const zip = new JSZip();
@@ -1254,6 +1410,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             const bodyFontSize = document.getElementById('bodyFontSize')?.value || "11pt";
             const tableFontSize = document.getElementById('tableFontSize')?.value || "10.5pt";
             const emailStyles = buildEmailStyles(fontFamily, bodyFontSize, tableFontSize);
+
             for (const region in tableData) {
                 const data = tableData[region];
                 if (!data || data.length === 0) continue;
@@ -1266,6 +1423,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 const emlContent = [`To: ${routing.to || ''}`, `Cc: ${routing.cc || ''}`, `Subject: ${finalSubject}`, `X-Unsent: 1`, `Content-Type: text/html; charset="utf-8"`, ``, fullHtml].join('\r\n');
                 zip.file(`${finalSubject.replace(/[^a-z0-9]/gi, '_').substring(0, 150)}_${region}.eml`, emlContent);
             }
+
             const zipName = `Batch_Emails_${dateShort.replace(/\./g, '_')}.zip`;
             if (window.pywebview && window.pywebview.api) {
                 const b64 = await zip.generateAsync({ type: "base64" });
@@ -1280,6 +1438,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
                 URL.revokeObjectURL(url);
             }
         }
+
         function initializeDates() {
             const today = new Date();
             const dd = String(today.getDate()).padStart(2, '0');
@@ -1289,11 +1448,13 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
             const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             document.getElementById('longDate').value = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
         }
+
         async function bootApp() {
             initializeDates();
             await loadMemoryFromDisk();
             renderEmail();
         }
+
         window.addEventListener('pywebviewready', bootApp);
         window.onload = function() {
             setTimeout(() => { if (!window.pywebview) bootApp(); }, 150);
@@ -1301,7 +1462,7 @@ IC <id="copyFeedback" class="text-emerald-600 bg-emerald-50 border border-emeral
     </script>
 </body>
 </html>
-""")
+"""
 
 
 class DesktopApi:
